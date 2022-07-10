@@ -52,7 +52,7 @@ class JobTypeController extends Controller
      */
     public function show(JobType $jobType)
     {
-        //
+        return response()->json($jobType, 200);
     }
 
     /**
