@@ -1,0 +1,13 @@
+h1 {
+    margin: 0;
+    display: inline-block;
+}
+
+.add-new {
+    margin-top: 15px;
+    float: right;
+}
+
+hr {
+    margin-bottom: 40px;
+}

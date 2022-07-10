@@ -8,10 +8,12 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { JobTypesComponent } from './components/job-types/job-types.component';
 import { JobTypeEditComponent } from './components/job-type-edit/job-type-edit.component';
+import { JobTypeCreateComponent } from './components/job-type-create/job-type-create.component';
 
 const appRoutes: Routes = [
     { path: '', component: JobTypesComponent },
     { path: 'edit/:id', component: JobTypeEditComponent },
+    { path: 'create', component: JobTypeCreateComponent },
 ];
 
 @NgModule({
@@ -20,6 +22,7 @@ const appRoutes: Routes = [
         JobTypesComponent,
         NavbarComponent,
         JobTypeEditComponent,
+        JobTypeCreateComponent,
     ],
     imports: [
         BrowserModule,

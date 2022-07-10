@@ -24,12 +24,6 @@ export class JobTypesComponent implements OnInit {
         });
     }
 
-    public addJobType() {
-        this.jobTypeService.addJobType(this.jobType).subscribe(res => {
-            this.getJobTypes();
-        });
-    }
-
     public deleteJobType(id: number) {
         this.jobTypeService.deleteJobType(id).subscribe(res => {
             this.getJobTypes();
