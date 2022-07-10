@@ -19,4 +19,7 @@ class JobType extends Model
         'name',
     ];
 
+    public function jobHistories() {
+        return $this->hasMany(JobHistory::class);
+    }
 }
