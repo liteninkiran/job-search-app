@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JobTypeController;
+use App\Http\Controllers\JobHistoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,4 +20,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('/job_types', JobTypeController::class);
+Route::resource('/job_type', JobTypeController::class);
+Route::resource('/job_history', JobHistoryController::class);
