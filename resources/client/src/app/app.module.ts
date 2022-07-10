@@ -9,11 +9,13 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { JobTypesComponent } from './components/job-types/job-types.component';
 import { JobTypeEditComponent } from './components/job-type-edit/job-type-edit.component';
 import { JobTypeCreateComponent } from './components/job-type-create/job-type-create.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 const appRoutes: Routes = [
-    { path: '', component: JobTypesComponent },
-    { path: 'edit/:id', component: JobTypeEditComponent },
-    { path: 'create', component: JobTypeCreateComponent },
+    { path: '', component: DashboardComponent },
+    { path: 'job_types', component: JobTypesComponent },
+    { path: 'job_types/edit/:id', component: JobTypeEditComponent },
+    { path: 'job_types/create', component: JobTypeCreateComponent },
 ];
 
 @NgModule({
@@ -23,6 +25,7 @@ const appRoutes: Routes = [
         NavbarComponent,
         JobTypeEditComponent,
         JobTypeCreateComponent,
+        DashboardComponent,
     ],
     imports: [
         BrowserModule,

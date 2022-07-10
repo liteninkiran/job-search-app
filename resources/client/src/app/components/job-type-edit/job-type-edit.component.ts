@@ -36,7 +36,7 @@ export class JobTypeEditComponent implements OnInit {
     public updateJobType() {
         this.jobTypeService.updateJobType(this.id, this.jobType).subscribe(res => {
             // this.location.back();
-            this.router.navigateByUrl('/');
+            this.router.navigateByUrl('/job_types');
         });
     }
 }

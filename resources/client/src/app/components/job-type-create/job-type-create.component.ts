@@ -22,7 +22,7 @@ export class JobTypeCreateComponent implements OnInit {
 
     public addJobType() {
         this.jobTypeService.addJobType(this.jobType).subscribe(res => {
-            this.router.navigateByUrl('/');
+            this.router.navigateByUrl('/job_types');
         });
     }
 }
