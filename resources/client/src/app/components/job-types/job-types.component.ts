@@ -1,16 +1,19 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
 import { JobType } from './job-type';
 import { JobTypeService } from './job-type.service';
 import { ActionButtonComponent, ButtonParams } from '../button/action-button.component';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-job-types',
     templateUrl: './job-types.component.html',
     styleUrls: ['./job-types.component.css'],
 })
-export class JobTypesComponent implements OnInit {
+export class JobTypesComponent implements OnInit, OnDestroy {
+
     @ViewChild('grid', { static: false }) agGrid!: AgGridAngular;
+
     public jobTypes: any;
     public jobType = new JobType();
     public columnDefs = [
@@ -29,6 +32,9 @@ export class JobTypesComponent implements OnInit {
         },
     ];
 
+    public subGet: Subscription = new Subscription;
+    public subDelete: Subscription = new Subscription;
+
     constructor(
         private jobTypeService: JobTypeService,
     ) { }
@@ -37,14 +43,19 @@ export class JobTypesComponent implements OnInit {
         this.getJobTypes();
     }
 
+    public ngOnDestroy(): void {
+        this.subGet.unsubscribe();
+        this.subDelete.unsubscribe();
+    }
+
     public getJobTypes() {
-        this.jobTypeService.getJobTypes().subscribe(res => {
+        this.subGet = this.jobTypeService.getJobTypes().subscribe(res => {
             this.jobTypes = res;
         });
     }
 
     public deleteRecord(id: number) {
-        this.jobTypeService.deleteJobType(id).subscribe(res => {
+        this.subDelete = this.jobTypeService.deleteJobType(id).subscribe(res => {
             this.getJobTypes();
         });
     }
