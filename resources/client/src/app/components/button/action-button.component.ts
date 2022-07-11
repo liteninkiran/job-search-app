@@ -4,24 +4,27 @@ import { ICellRendererParams } from 'ag-grid-community';
 import { Router } from '@angular/router';
 
 export interface ButtonParams {
-    buttonText?: string;
+    editUrl?: string;
 }
 
 @Component({
     selector: 'app-edit-button',
-    template: `<button class="btn btn-primary btn-sm" (click)="onClick($event)">{{ buttonText }}</button>`,
+    template: `
+    <button class="btn btn-primary btn-sm" (click)="edit($event)">Edit</button>
+    <button class="btn btn-danger btn-sm" style="margin-left:10px;" (click)="delete($event)">Delete</button>
+    `,
     styles: [],
 })
-export class ButtonComponent implements OnInit, ICellRendererAngularComp {
+export class ActionButtonComponent implements OnInit, ICellRendererAngularComp {
 
     public id: number = 0;
-    public buttonText: string = 'Button';
+    public editUrl: string = '';
 
     constructor(private router: Router) { }
 
     public agInit(params: ICellRendererParams & ButtonParams): void {
         this.id = params.value;
-        this.buttonText = params.buttonText ?? this.buttonText;
+        this.editUrl = params.editUrl ?? this.editUrl;
     }
 
     public refresh(params: ICellRendererParams<any, any>): boolean {
@@ -31,7 +34,11 @@ export class ButtonComponent implements OnInit, ICellRendererAngularComp {
     public ngOnInit(): void {
     }
 
-    public onClick(event: any): void {
-        this.router.navigateByUrl(`job_types/edit/${this.id}`);
+    public edit(event: any): void {
+        this.router.navigateByUrl(`${this.editUrl}${this.id}`);
+    }
+
+    public delete(event: any): void {
+        this.router.navigateByUrl(`${this.editUrl}${this.id}`);
     }
 }
