@@ -10,7 +10,7 @@ export interface ButtonParams {
 @Component({
     selector: 'app-edit-button',
     template: `
-    <button class="btn btn-primary btn-sm" (click)="edit($event)">Edit</button>
+    <button class="btn btn-dark btn-sm" (click)="edit($event)">Edit</button>
     <button class="btn btn-danger btn-sm" style="margin-left:10px;" (click)="delete($event)">Delete</button>
     `,
     styles: [],
