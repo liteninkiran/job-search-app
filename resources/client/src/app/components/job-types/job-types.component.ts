@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ButtonParams, EditButtonComponent } from '../button/edit-button/edit-button.component';
 import { JobType } from './job-type';
 import { JobTypeService } from './job-type.service';
 
@@ -15,6 +16,14 @@ export class JobTypesComponent implements OnInit {
         { headerName: 'ID', field: 'id', sortable: true, resizable: true, filter: true },
         { headerName: 'Slug', field: 'slug', sortable: true, resizable: true, filter: true },
         { headerName: 'Name', field: 'name', sortable: true, resizable: true, filter: true },
+        {
+            headerName: 'Action',
+            field: 'id',
+            cellRenderer: EditButtonComponent,
+            cellRendererParams: {
+                buttonText: 'Edit'
+            } as ButtonParams
+        },
     ];
 
     constructor(private jobTypeService: JobTypeService) { }
