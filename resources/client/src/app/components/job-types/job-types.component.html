@@ -3,7 +3,10 @@
 
 <hr>
 
+<button class="btn btn-primary btn-sm add-new" (click)="getRow()">Edit</button>
+
 <ag-grid-angular
+    #grid
     class="ag-theme-alpine data-grid"
     [rowData]="jobTypes"
     [columnDefs]="columnDefs"
