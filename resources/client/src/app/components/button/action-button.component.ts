@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ICellRendererAngularComp } from 'ag-grid-angular';
-import { ICellRendererParams } from 'ag-grid-community';
+import { GridOptions, ICellRendererParams } from 'ag-grid-community';
 import { Router } from '@angular/router';
 
 export interface ButtonParams {
     editUrl?: string;
+    parent?: any;
 }
 
 @Component({
@@ -16,15 +17,16 @@ export interface ButtonParams {
     styles: [],
 })
 export class ActionButtonComponent implements OnInit, ICellRendererAngularComp {
-
     public id: number = 0;
     public editUrl: string = '';
+    public parent: any;
 
     constructor(private router: Router) { }
 
     public agInit(params: ICellRendererParams & ButtonParams): void {
         this.id = params.value;
         this.editUrl = params.editUrl ?? this.editUrl;
+        this.parent = params.parent;
     }
 
     public refresh(params: ICellRendererParams<any, any>): boolean {
@@ -39,6 +41,6 @@ export class ActionButtonComponent implements OnInit, ICellRendererAngularComp {
     }
 
     public delete(event: any): void {
-        this.router.navigateByUrl(`${this.editUrl}${this.id}`);
+        this.parent.deleteRecord(this.id);
     }
 }

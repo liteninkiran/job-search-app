@@ -23,7 +23,8 @@ export class JobTypesComponent implements OnInit {
             resizable: true,
             cellRenderer: ActionButtonComponent,
             cellRendererParams: {
-                editUrl: 'job_types/edit/'
+                editUrl: 'job_types/edit/',
+                parent: this,
             } as ButtonParams
         },
     ];
@@ -32,7 +33,7 @@ export class JobTypesComponent implements OnInit {
         private jobTypeService: JobTypeService,
     ) { }
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         this.getJobTypes();
     }
 
@@ -42,7 +43,7 @@ export class JobTypesComponent implements OnInit {
         });
     }
 
-    public deleteJobType(id: number) {
+    public deleteRecord(id: number) {
         this.jobTypeService.deleteJobType(id).subscribe(res => {
             this.getJobTypes();
         });
