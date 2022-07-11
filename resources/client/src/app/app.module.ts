@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { AgGridModule } from 'ag-grid-angular';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
@@ -21,17 +22,18 @@ const appRoutes: Routes = [
 @NgModule({
     declarations: [
         AppComponent,
-        JobTypesComponent,
         NavbarComponent,
+        JobTypesComponent,
+        DashboardComponent,
         JobTypeEditComponent,
         JobTypeCreateComponent,
-        DashboardComponent,
     ],
     imports: [
-        BrowserModule,
-        RouterModule.forRoot(appRoutes),
-        HttpClientModule,
         FormsModule,
+        AgGridModule,
+        BrowserModule,
+        HttpClientModule,
+        RouterModule.forRoot(appRoutes),
     ],
     providers: [],
     bootstrap: [AppComponent]

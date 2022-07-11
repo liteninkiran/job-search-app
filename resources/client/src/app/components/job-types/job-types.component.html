@@ -3,31 +3,8 @@
 
 <hr>
 
-<table class="table">
-
-    <thead>
-
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Slug</th>
-            <th scope="col">Name</th>
-            <th>Actions</th>
-        </tr>
-
-    </thead>
-
-    <tbody>
-
-        <tr *ngFor="let jobType of jobTypes">
-            <td scope="row">{{ jobType.id }}</td>
-            <td>{{ jobType.slug }}</td>
-            <td>{{ jobType.name }}</td>
-            <td>
-                <button class="btn btn-danger btn-sm" (click)="deleteJobType(jobType.id)">Delete</button>
-                <button class="btn btn-warning btn-sm mx-2" routerLink="edit/{{ jobType.id }}">Edit</button>
-            </td>
-        </tr>
-
-    </tbody>
-
-</table>
+<ag-grid-angular
+    class="ag-theme-balham data-grid"
+    [rowData]="jobTypes"
+    [columnDefs]="columnDefs"
+></ag-grid-angular>

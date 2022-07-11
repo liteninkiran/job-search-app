@@ -11,6 +11,11 @@ export class JobTypesComponent implements OnInit {
 
     public jobTypes: any;
     public jobType = new JobType();
+    public columnDefs = [
+        { headerName: 'ID', field: 'id', sortable: true, resizable: true, filter: true },
+        { headerName: 'Slug', field: 'slug', sortable: true, resizable: true, filter: true },
+        { headerName: 'Name', field: 'name', sortable: true, resizable: true, filter: true },
+    ];
 
     constructor(private jobTypeService: JobTypeService) { }
 
