@@ -11,6 +11,7 @@ import { JobTypesComponent } from './components/job-types/job-types.component';
 import { JobTypeEditComponent } from './components/job-type-edit/job-type-edit.component';
 import { JobTypeCreateComponent } from './components/job-type-create/job-type-create.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { ButtonComponent } from './components/button/button.component';
 
 const appRoutes: Routes = [
     { path: '', component: DashboardComponent },
@@ -27,6 +28,7 @@ const appRoutes: Routes = [
         DashboardComponent,
         JobTypeEditComponent,
         JobTypeCreateComponent,
+        ButtonComponent,
     ],
     imports: [
         FormsModule,
