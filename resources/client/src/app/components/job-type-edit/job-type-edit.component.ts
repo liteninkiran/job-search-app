@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { JobType } from '../job-types/job-type';
@@ -13,6 +14,7 @@ export class JobTypeEditComponent implements OnInit {
     public id: number = 0;
     public data: any;
     public jobType = new JobType();
+    public errors: any;
 
     constructor(
         private route: ActivatedRoute,
@@ -30,6 +32,8 @@ export class JobTypeEditComponent implements OnInit {
         this.jobTypeService.getJobTypeById(id).subscribe(res => {
             this.data = res;
             this.jobType = this.data;
+        }, (error: HttpErrorResponse) => {
+            console.log(error);
         });
     }
 
@@ -37,6 +41,8 @@ export class JobTypeEditComponent implements OnInit {
         this.jobTypeService.updateJobType(this.id, this.jobType).subscribe(res => {
             // this.location.back();
             this.router.navigateByUrl('/job_types');
+        }, (error: HttpErrorResponse) => {
+            this.errors = error.error.errors;
         });
     }
 }

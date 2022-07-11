@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { JobType } from '../job-types/job-type';
@@ -11,6 +12,7 @@ import { JobTypeService } from '../job-types/job-type.service';
 export class JobTypeCreateComponent implements OnInit {
 
     public jobType = new JobType();
+    public errors: any;
 
     constructor(
         private router: Router,
@@ -23,6 +25,8 @@ export class JobTypeCreateComponent implements OnInit {
     public addJobType() {
         this.jobTypeService.addJobType(this.jobType).subscribe(res => {
             this.router.navigateByUrl('/job_types');
+        }, (error: HttpErrorResponse) => {
+            this.errors = error.error.errors;
         });
     }
 }
