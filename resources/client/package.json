@@ -10,6 +10,7 @@
   },
   "private": true,
   "dependencies": {
+    "@ag-grid-enterprise/column-tool-panel": "^28.0.2",
     "@angular/animations": "^14.0.0",
     "@angular/common": "^14.0.0",
     "@angular/compiler": "^14.0.0",
@@ -20,6 +21,7 @@
     "@angular/router": "^14.0.0",
     "ag-grid-angular": "^28.0.0",
     "ag-grid-community": "^28.0.2",
+    "ag-grid-enterprise": "^28.0.2",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

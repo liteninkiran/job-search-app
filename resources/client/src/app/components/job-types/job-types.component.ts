@@ -4,6 +4,7 @@ import { JobType } from './job-type';
 import { JobTypeService } from './job-type.service';
 import { ActionButtonComponent, ButtonParams } from '../button/action-button.component';
 import { Subscription } from 'rxjs';
+import { ColDef, GridReadyEvent, SideBarDef } from 'ag-grid-community';
 
 @Component({
     selector: 'app-job-types',
@@ -16,14 +17,21 @@ export class JobTypesComponent implements OnInit, OnDestroy {
 
     public jobTypes: any;
     public jobType = new JobType();
+    public defaultColDef: ColDef = {
+        flex: 5,
+        minWidth: 100,
+        filter: true,
+        sortable: true,
+        resizable: true,
+      };
     public columnDefs = [
-        { headerName: 'ID'  , field: 'id'  , sortable: true, resizable: true, filter: true },
-        { headerName: 'Slug', field: 'slug', sortable: true, resizable: true, filter: true },
-        { headerName: 'Name', field: 'name', sortable: true, resizable: true, filter: true },
+        { headerName: 'ID', field: 'id', flex: 1 },
+        { headerName: 'Slug', field: 'slug', hidden: true },
+        { headerName: 'Name', field: 'name' },
         {
             headerName: 'Actions',
             field: 'id',
-            resizable: true,
+            flex: 3,
             cellRenderer: ActionButtonComponent,
             cellRendererParams: {
                 editUrl: 'job_types/edit/',
@@ -31,13 +39,40 @@ export class JobTypesComponent implements OnInit, OnDestroy {
             } as ButtonParams
         },
     ];
-
+    public sideBar: SideBarDef;
     public subGet: Subscription = new Subscription;
     public subDelete: Subscription = new Subscription;
 
     constructor(
         private jobTypeService: JobTypeService,
-    ) { }
+    ) {
+        this.sideBar = {
+            toolPanels: [
+                {
+                    id: 'columns',
+                    labelDefault: 'Columns',
+                    labelKey: 'columns',
+                    iconKey: 'columns',
+                    toolPanel: 'agColumnsToolPanel',
+                    minWidth: 225,
+                    maxWidth: 225,
+                    width: 225,
+                },
+                {
+                    id: 'filters',
+                    labelDefault: 'Filters',
+                    labelKey: 'filters',
+                    iconKey: 'filter',
+                    toolPanel: 'agFiltersToolPanel',
+                    minWidth: 180,
+                    maxWidth: 400,
+                    width: 250,
+                }
+            ],
+            position: 'right',
+        };
+
+    }
 
     public ngOnInit(): void {
         this.getJobTypes();

@@ -6,6 +6,8 @@
 <ag-grid-angular
     #grid
     class="ag-theme-alpine data-grid"
-    [rowData]="jobTypes"
+    [defaultColDef]="defaultColDef"
     [columnDefs]="columnDefs"
+    [rowData]="jobTypes"
+    [sideBar]="sideBar"
 ></ag-grid-angular>
