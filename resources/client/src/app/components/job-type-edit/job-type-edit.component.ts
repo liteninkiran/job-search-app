@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { JobType } from '../job-types/job-type';
 import { JobTypeService } from '../job-types/job-type.service';
@@ -20,7 +20,7 @@ export class JobTypeEditComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private jobTypeService: JobTypeService,
-        // private location: Location
+        private zone: NgZone,
     ) { }
 
     ngOnInit(): void {
@@ -29,20 +29,18 @@ export class JobTypeEditComponent implements OnInit {
     }
 
     public getData(id: number) {
-        this.jobTypeService.getJobTypeById(id).subscribe(res => {
-            this.data = res;
-            this.jobType = this.data;
-        }, (error: HttpErrorResponse) => {
-            console.log(error);
+        this.jobTypeService.getJobTypeById(id).subscribe({
+            next: (data) => this.jobType = data,
+            error: (error: HttpErrorResponse) => console.error(error),
+            complete: () => console.info('complete') 
         });
     }
 
     public updateJobType() {
-        this.jobTypeService.updateJobType(this.id, this.jobType).subscribe(res => {
-            // this.location.back();
-            this.router.navigateByUrl('/job_types');
-        }, (error: HttpErrorResponse) => {
-            this.errors = error.error.errors;
+        this.jobTypeService.updateJobType(this.id, this.jobType).subscribe({
+            next: (data) => this.zone.run(() => this.router.navigateByUrl('/job_types')),
+            error: (error: HttpErrorResponse) => this.errors = error.error.errors,
+            complete: () => console.info('complete') 
         });
     }
 }
