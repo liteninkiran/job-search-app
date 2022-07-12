@@ -23,11 +23,12 @@ export class JobTypesComponent implements OnInit, OnDestroy {
         filter: true,
         sortable: true,
         resizable: true,
+        hide: true,
       };
     public columnDefs = [
         { headerName: 'ID', field: 'id', flex: 1 },
-        { headerName: 'Slug', field: 'slug', hidden: true },
-        { headerName: 'Name', field: 'name' },
+        { headerName: 'Slug', field: 'slug' },
+        { headerName: 'Name', field: 'name', hide: false },
         {
             headerName: 'Actions',
             field: 'id',

@@ -10,7 +10,6 @@
   },
   "private": true,
   "dependencies": {
-    "@ag-grid-enterprise/column-tool-panel": "^28.0.2",
     "@angular/animations": "^14.0.0",
     "@angular/common": "^14.0.0",
     "@angular/compiler": "^14.0.0",
