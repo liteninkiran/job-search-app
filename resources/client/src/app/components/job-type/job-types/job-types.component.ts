@@ -1,12 +1,12 @@
-import { Component, ComponentRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
 import { JobType } from './job-type';
 import { JobTypeService } from './job-type.service';
 import { ActionButtonComponent, ButtonParams } from '../../button/action-button.component';
 import { Subscription } from 'rxjs';
-import { ColDef, GridReadyEvent, SideBarDef } from 'ag-grid-community';
-import { isSameMonth } from 'date-fns';
+import { ColDef, SideBarDef } from 'ag-grid-community';
 import { HttpErrorResponse } from '@angular/common/http';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 @Component({
     selector: 'app-job-types',
@@ -17,7 +17,6 @@ export class JobTypesComponent implements OnInit, OnDestroy {
 
     @ViewChild('grid', { static: false }) agGrid!: AgGridAngular;
 
-    public date = new Date();
     public jobTypes: any;
     public jobType = new JobType();
     public defaultColDef: ColDef = {
@@ -54,6 +53,7 @@ export class JobTypesComponent implements OnInit, OnDestroy {
 
     constructor(
         private jobTypeService: JobTypeService,
+        private notification: NzNotificationService,
     ) {
         this.sideBar = {
             toolPanels: [
@@ -112,28 +112,11 @@ export class JobTypesComponent implements OnInit, OnDestroy {
     }
 
     public deleteError(error: HttpErrorResponse) {
-        alert(error.error.message);
-    }
-
-    public onValueChange(value: Date): void {
-        console.log(`Current value: ${value}`);
-    }
-
-    public onPanelChange(change: { date: Date; mode: string }): void {
-        console.log(`Current value: ${change.date}`);
-        console.log(`Current mode: ${change.mode}`);
-    }
-
-    public onChange(date: Date): void {
-      console.log(date);
-    }
-  
-    public isSameMonth(current: Date): boolean {
-      return isSameMonth(current, this.date);
-    }
-
-    public toggleCalendar() {
-        this.calendarVisible = !this.calendarVisible;
-        this.buttonText = this.calendarVisible ? this.buttonTextHide : this.buttonTextShow;
+        const message = '<p>Record could not be deleted:</p>' + 
+                        '<p><strong>' + error.error.record + '</strong></p>' + 
+                        '<p><em>' + error.error.message + '</em></p>';
+        this.notification.blank('SQL Error', message, {
+            nzDuration: 0,
+        });
     }
 }

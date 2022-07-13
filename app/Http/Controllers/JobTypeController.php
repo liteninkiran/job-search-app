@@ -105,8 +105,15 @@ class JobTypeController extends Controller
             $jobType->delete();
         } catch(QueryException $e) {
             return response()->json([
-                'message' => "Record could not be deleted:\n\n" . $record,
-                'detail' => $e->getSql(),
+                'message' => $e->getMessage(),
+                'code' => $e->getCode(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTrace(),
+                'message' => $e->getMessage(),
+                'sql' => $e->getSql(),
+                'bindings' => $e->getBindings(),
+                'record' => $record,
             ], 500);
         }
 
