@@ -5,9 +5,33 @@
 
 <ag-grid-angular
     #grid
-    class="ag-theme-alpine data-grid"
+    class="ag-theme-alpine data-grid mb-5"
     [defaultColDef]="defaultColDef"
     [columnDefs]="columnDefs"
     [rowData]="jobTypes"
     [sideBar]="sideBar"
 ></ag-grid-angular>
+
+<button nz-button nzType="primary" (click)="toggleCalendar()">{{ buttonText }}</button>
+
+<div *ngIf="calendarVisible">
+
+    <nz-calendar
+        [nzDateFullCell]="tpl"
+        [(ngModel)]="date"
+        (ngModelChange)="onChange($event)"
+    >
+    </nz-calendar>
+
+    <ng-template #tpl let-current>
+        <div class="ant-picker-calendar-date-value">
+            <ng-container *ngIf="isSameMonth(current); else notCurrentMonth">
+                {{ current.getDate() }}
+            </ng-container>
+            <ng-template #notCurrentMonth>&nbsp;</ng-template>
+        </div>
+        <div class="ant-picker-calendar-date-content"></div>
+    </ng-template> 
+
+</div>
+

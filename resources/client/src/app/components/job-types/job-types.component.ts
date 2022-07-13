@@ -5,6 +5,7 @@ import { JobTypeService } from './job-type.service';
 import { ActionButtonComponent, ButtonParams } from '../button/action-button.component';
 import { Subscription } from 'rxjs';
 import { ColDef, GridReadyEvent, SideBarDef } from 'ag-grid-community';
+import { isSameMonth } from 'date-fns';
 
 @Component({
     selector: 'app-job-types',
@@ -43,6 +44,10 @@ export class JobTypesComponent implements OnInit, OnDestroy {
     public sideBar: SideBarDef;
     public subGet: Subscription = new Subscription;
     public subDelete: Subscription = new Subscription;
+    public calendarVisible = false;
+    private buttonTextShow = 'Show Calendar';
+    private buttonTextHide = 'Hide Calendar';
+    public buttonText = this.buttonTextShow;
 
     constructor(
         private jobTypeService: JobTypeService,
@@ -94,5 +99,30 @@ export class JobTypesComponent implements OnInit, OnDestroy {
         this.subDelete = this.jobTypeService.deleteJobType(id).subscribe(res => {
             this.getJobTypes();
         });
+    }
+
+    public onValueChange(value: Date): void {
+        console.log(`Current value: ${value}`);
+    }
+
+    public onPanelChange(change: { date: Date; mode: string }): void {
+        console.log(`Current value: ${change.date}`);
+        console.log(`Current mode: ${change.mode}`);
+    }
+
+
+    public date = new Date(2022, 7, 13);
+
+    public onChange(date: Date): void {
+      console.log(date);
+    }
+  
+    public isSameMonth(current: Date): boolean {
+      return isSameMonth(current, this.date);
+    }
+
+    public toggleCalendar() {
+        this.calendarVisible = !this.calendarVisible;
+        this.buttonText = this.calendarVisible ? this.buttonTextHide : this.buttonTextShow;
     }
 }
