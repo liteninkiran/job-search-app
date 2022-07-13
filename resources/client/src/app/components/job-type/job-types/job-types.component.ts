@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
 import { JobType } from './job-type';
 import { JobTypeService } from './job-type.service';
@@ -7,6 +7,8 @@ import { Subscription } from 'rxjs';
 import { ColDef, SideBarDef } from 'ag-grid-community';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { NzDrawerRef, NzDrawerService } from 'ng-zorro-antd/drawer';
+import { JobTypeEditDrawerComponent } from '../job-type-edit-drawer/job-type-edit-drawer.component';
 
 @Component({
     selector: 'app-job-types',
@@ -47,13 +49,12 @@ export class JobTypesComponent implements OnInit, OnDestroy {
     public subGet: Subscription = new Subscription;
     public subDelete: Subscription = new Subscription;
     public calendarVisible = false;
-    private buttonTextShow = 'Show Calendar';
-    private buttonTextHide = 'Hide Calendar';
-    public buttonText = this.buttonTextShow;
+    public drawerRef!: NzDrawerRef;
 
     constructor(
         private jobTypeService: JobTypeService,
         private notification: NzNotificationService,
+        private drawerService: NzDrawerService,
     ) {
         this.sideBar = {
             toolPanels: [
@@ -117,6 +118,24 @@ export class JobTypesComponent implements OnInit, OnDestroy {
                         '<p><em>' + error.error.message + '</em></p>';
         this.notification.blank('SQL Error', message, {
             nzDuration: 0,
+        });
+    }
+
+    public open(): void {
+        this.drawerRef = this.drawerService.create({
+            nzTitle: 'Template',
+            nzFooter: 'Footer',
+            nzExtra: 'Extra',
+            nzContent: JobTypeEditDrawerComponent,
+            nzContentParams: { }
+        });
+
+        this.drawerRef.afterOpen.subscribe(() => {
+            console.log('Drawer(Template) open');
+        });
+      
+        this.drawerRef.afterClose.subscribe(() => {
+            console.log('Drawer(Template) close');
         });
     }
 }
