@@ -18,9 +18,9 @@ import { registerLocaleData } from '@angular/common';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { JobTypesComponent } from './components/job-types/job-types.component';
-import { JobTypeEditComponent } from './components/job-type-edit/job-type-edit.component';
-import { JobTypeCreateComponent } from './components/job-type-create/job-type-create.component';
+import { JobTypesComponent } from './components/job-type/job-types/job-types.component';
+import { JobTypeEditComponent } from './components/job-type/job-type-edit/job-type-edit.component';
+import { JobTypeCreateComponent } from './components/job-type/job-type-create/job-type-create.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ActionButtonComponent } from './components/button/action-button.component';
 

@@ -2,7 +2,7 @@ import { Component, ComponentRef, OnDestroy, OnInit, ViewChild } from '@angular/
 import { AgGridAngular } from 'ag-grid-angular';
 import { JobType } from './job-type';
 import { JobTypeService } from './job-type.service';
-import { ActionButtonComponent, ButtonParams } from '../button/action-button.component';
+import { ActionButtonComponent, ButtonParams } from '../../button/action-button.component';
 import { Subscription } from 'rxjs';
 import { ColDef, GridReadyEvent, SideBarDef } from 'ag-grid-community';
 import { isSameMonth } from 'date-fns';
