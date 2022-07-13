@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ComponentRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
 import { JobType } from './job-type';
 import { JobTypeService } from './job-type.service';
@@ -33,7 +33,8 @@ export class JobTypesComponent implements OnInit, OnDestroy {
         {
             headerName: 'Actions',
             field: 'id',
-            flex: 3,
+            flex: 2,
+            hide: false,
             cellRenderer: ActionButtonComponent,
             cellRendererParams: {
                 editUrl: 'job_types/edit/',
@@ -60,9 +61,15 @@ export class JobTypesComponent implements OnInit, OnDestroy {
                     labelKey: 'columns',
                     iconKey: 'columns',
                     toolPanel: 'agColumnsToolPanel',
-                    minWidth: 225,
-                    maxWidth: 225,
-                    width: 225,
+                    toolPanelParams: {
+                        suppressRowGroups: true,
+                        suppressValues: true,
+                        suppressPivots: true,
+                        suppressPivotMode: true,
+                      },
+                    minWidth: 100,
+                    maxWidth: 400,
+                    width: 250,
                 },
                 {
                     id: 'filters',
@@ -70,7 +77,7 @@ export class JobTypesComponent implements OnInit, OnDestroy {
                     labelKey: 'filters',
                     iconKey: 'filter',
                     toolPanel: 'agFiltersToolPanel',
-                    minWidth: 180,
+                    minWidth: 100,
                     maxWidth: 400,
                     width: 250,
                 }
