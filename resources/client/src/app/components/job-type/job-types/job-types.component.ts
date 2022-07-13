@@ -6,6 +6,7 @@ import { ActionButtonComponent, ButtonParams } from '../../button/action-button.
 import { Subscription } from 'rxjs';
 import { ColDef, GridReadyEvent, SideBarDef } from 'ag-grid-community';
 import { isSameMonth } from 'date-fns';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
     selector: 'app-job-types',
@@ -16,6 +17,7 @@ export class JobTypesComponent implements OnInit, OnDestroy {
 
     @ViewChild('grid', { static: false }) agGrid!: AgGridAngular;
 
+    public date = new Date();
     public jobTypes: any;
     public jobType = new JobType();
     public defaultColDef: ColDef = {
@@ -103,9 +105,14 @@ export class JobTypesComponent implements OnInit, OnDestroy {
     }
 
     public deleteRecord(id: number) {
-        this.subDelete = this.jobTypeService.deleteJobType(id).subscribe(res => {
-            this.getJobTypes();
+        this.subDelete = this.jobTypeService.deleteJobType(id).subscribe({
+            next: (data) => this.getJobTypes(),
+            error: (error: HttpErrorResponse) => this.deleteError(error),
         });
+    }
+
+    public deleteError(error: HttpErrorResponse) {
+        alert(error.error.message);
     }
 
     public onValueChange(value: Date): void {
@@ -116,9 +123,6 @@ export class JobTypesComponent implements OnInit, OnDestroy {
         console.log(`Current value: ${change.date}`);
         console.log(`Current mode: ${change.mode}`);
     }
-
-
-    public date = new Date(2022, 7, 13);
 
     public onChange(date: Date): void {
       console.log(date);

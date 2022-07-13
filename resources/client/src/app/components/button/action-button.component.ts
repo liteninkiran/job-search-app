@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ICellRendererAngularComp } from 'ag-grid-angular';
-import { GridOptions, ICellRendererParams } from 'ag-grid-community';
+import { ICellRendererParams } from 'ag-grid-community';
 import { Router } from '@angular/router';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 export interface ButtonParams {
     editUrl?: string;
@@ -11,8 +12,24 @@ export interface ButtonParams {
 @Component({
     selector: 'app-edit-button',
     template: `
-    <button class="btn btn-dark btn-sm" (click)="edit($event)">Edit</button>
-    <button class="btn btn-danger btn-sm" style="margin-left:10px;" (click)="delete($event)">Delete</button>
+        <!-- Edit -->
+        <button
+            class="btn btn-dark btn-sm"
+            (click)="edit($event)"
+        >
+            Edit
+        </button>
+
+        <!-- Delete -->
+        <button 
+            class="btn btn-danger btn-sm mx-2"
+            nz-popconfirm
+            nzPopconfirmTitle="Confirm delete"
+            nzPopconfirmPlacement="top"
+            (nzOnConfirm)="confirm()"
+        >
+            Delete
+        </button>
     `,
     styles: [],
 })
@@ -21,7 +38,10 @@ export class ActionButtonComponent implements OnInit, ICellRendererAngularComp {
     public editUrl: string = '';
     public parent: any;
 
-    constructor(private router: Router) { }
+    constructor(
+        private router: Router,
+        private nzMessageService: NzMessageService,
+    ) { }
 
     public agInit(params: ICellRendererParams & ButtonParams): void {
         this.id = params.value;
@@ -41,6 +61,10 @@ export class ActionButtonComponent implements OnInit, ICellRendererAngularComp {
     }
 
     public delete(event: any): void {
+        this.parent.deleteRecord(this.id);
+    }
+
+    public confirm(): void {
         this.parent.deleteRecord(this.id);
     }
 }

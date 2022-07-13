@@ -32,7 +32,7 @@ export class JobTypeCreateComponent implements OnInit, OnDestroy {
         this.subCreate = this.jobTypeService.addJobType(this.jobType).subscribe({
             next: (data) => this.router.navigateByUrl('/job_types'),
             error: (error: HttpErrorResponse) => this.errors = error.error.errors,
-            complete: () => console.info('complete') 
+            complete: () => {} // console.info('complete') 
         });
     }
 }

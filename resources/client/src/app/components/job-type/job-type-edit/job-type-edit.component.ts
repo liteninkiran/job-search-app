@@ -40,7 +40,7 @@ export class JobTypeEditComponent implements OnInit, OnDestroy {
         this.subGet = this.jobTypeService.getJobTypeById(id).subscribe({
             next: (data) => this.jobType = data,
             error: (error: HttpErrorResponse) => console.error(error),
-            complete: () => console.info('complete') 
+            complete: () => {} // console.info('complete') 
         });
     }
 
@@ -48,7 +48,7 @@ export class JobTypeEditComponent implements OnInit, OnDestroy {
         this.subUpdate = this.jobTypeService.updateJobType(this.id, this.jobType).subscribe({
             next: (data) => this.zone.run(() => this.router.navigateByUrl('/job_types')),
             error: (error: HttpErrorResponse) => this.errors = error.error.errors,
-            complete: () => console.info('complete') 
+            complete: () => {} // console.info('complete') 
         });
     }
 }
