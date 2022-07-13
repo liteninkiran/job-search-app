@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
-import { JobType } from './job-type';
 import { JobTypeService } from './job-type.service';
 import { ActionButtonComponent, ButtonParams } from '../../button/action-button.component';
 import { Subscription } from 'rxjs';
@@ -20,7 +19,6 @@ export class JobTypesComponent implements OnInit, OnDestroy {
     @ViewChild('grid', { static: false }) agGrid!: AgGridAngular;
 
     public jobTypes: any;
-    public jobType = new JobType();
     public defaultColDef: ColDef = {
         flex: 5,
         minWidth: 100,
@@ -46,7 +44,7 @@ export class JobTypesComponent implements OnInit, OnDestroy {
         },
     ];
     public sideBar: SideBarDef;
-    public subGet: Subscription = new Subscription;
+    public subJobTypes: Subscription = new Subscription;
     public subDelete: Subscription = new Subscription;
     public calendarVisible = false;
     public drawerRef!: NzDrawerRef;
@@ -87,7 +85,6 @@ export class JobTypesComponent implements OnInit, OnDestroy {
             ],
             position: 'right',
         };
-
     }
 
     public ngOnInit(): void {
@@ -95,12 +92,12 @@ export class JobTypesComponent implements OnInit, OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        this.subGet.unsubscribe();
+        this.subJobTypes.unsubscribe();
         this.subDelete.unsubscribe();
     }
 
     public getJobTypes() {
-        this.subGet = this.jobTypeService.getJobTypes().subscribe(res => {
+        this.subJobTypes = this.jobTypeService.getJobTypes().subscribe(res => {
             this.jobTypes = res;
         });
     }
@@ -121,21 +118,19 @@ export class JobTypesComponent implements OnInit, OnDestroy {
         });
     }
 
-    public open(): void {
+    public open(id: number): void {
         this.drawerRef = this.drawerService.create({
-            nzTitle: 'Template',
+            nzTitle: '',
             nzFooter: 'Footer',
-            nzExtra: 'Extra',
+            nzExtra: 'Edit',
             nzContent: JobTypeEditDrawerComponent,
-            nzContentParams: { }
+            nzContentParams: { 'id': id }
         });
 
-        this.drawerRef.afterOpen.subscribe(() => {
-            console.log('Drawer(Template) open');
-        });
+        this.drawerRef.afterOpen.subscribe(() => { });
       
         this.drawerRef.afterClose.subscribe(() => {
-            console.log('Drawer(Template) close');
+            this.getJobTypes();
         });
     }
 }

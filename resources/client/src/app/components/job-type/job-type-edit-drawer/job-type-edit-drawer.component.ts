@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { NzDrawerRef } from 'ng-zorro-antd/drawer';
 import { Subscription } from 'rxjs';
 import { JobType } from '../job-types/job-type';
 import { JobTypeService } from '../job-types/job-type.service';
@@ -10,7 +10,7 @@ import { JobTypeService } from '../job-types/job-type.service';
     templateUrl: './job-type-edit-drawer.component.html',
     styleUrls: ['./job-type-edit-drawer.component.css'],
 })
-export class JobTypeEditDrawerComponent implements OnInit {
+export class JobTypeEditDrawerComponent implements OnInit, OnDestroy {
 
     public id: number = 0;
     public data: any;
@@ -20,15 +20,14 @@ export class JobTypeEditDrawerComponent implements OnInit {
     public subUpdate: Subscription = new Subscription;
 
     constructor(
-        private route: ActivatedRoute,
-        private router: Router,
         private jobTypeService: JobTypeService,
-        private zone: NgZone,
+        private drawerRef: NzDrawerRef<string>
     ) { }
 
     public ngOnInit(): void {
-        this.id = this.route.snapshot.params['id'];
-        this.getData(this.id);
+        if(this.id !== 0) {
+            this.getData(this.id);
+        }
     }
 
     public ngOnDestroy(): void {
@@ -45,8 +44,8 @@ export class JobTypeEditDrawerComponent implements OnInit {
     }
 
     public updateJobType() {
-        this.subUpdate = this.jobTypeService.updateJobType(this.id, this.jobType).subscribe({
-            next: (data) => this.zone.run(() => this.router.navigateByUrl('/job_types')),
+        this.subUpdate = this.jobTypeService.updateJobType(this.jobType.id, this.jobType).subscribe({
+            next: (data) => this.drawerRef.close(),
             error: (error: HttpErrorResponse) => this.errors = error.error.errors,
             complete: () => {} // console.info('complete') 
         });

@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ICellRendererAngularComp } from 'ag-grid-angular';
 import { ICellRendererParams } from 'ag-grid-community';
-import { Router } from '@angular/router';
-import { NzMessageService } from 'ng-zorro-antd/message';
 
 export interface ButtonParams {
     editUrl?: string;
@@ -38,10 +36,7 @@ export class ActionButtonComponent implements OnInit, ICellRendererAngularComp {
     public editUrl: string = '';
     public parent: any;
 
-    constructor(
-        private router: Router,
-        private nzMessageService: NzMessageService,
-    ) { }
+    constructor() { }
 
     public agInit(params: ICellRendererParams & ButtonParams): void {
         this.id = params.value;
@@ -57,11 +52,7 @@ export class ActionButtonComponent implements OnInit, ICellRendererAngularComp {
     }
 
     public edit(event: any): void {
-        this.router.navigateByUrl(`${this.editUrl}${this.id}`);
-    }
-
-    public delete(event: any): void {
-        this.parent.deleteRecord(this.id);
+        this.parent.open(this.id);
     }
 
     public confirm(): void {
