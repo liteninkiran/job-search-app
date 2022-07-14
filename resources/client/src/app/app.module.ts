@@ -19,7 +19,6 @@ import { registerLocaleData } from '@angular/common';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { JobTypesComponent } from './components/job-type/job-types/job-types.component';
-import { JobTypeEditComponent } from './components/job-type/job-type-edit/job-type-edit.component';
 import { JobTypeEditDrawerComponent } from './components/job-type/job-type-edit-drawer/job-type-edit-drawer.component';
 import { JobTypeCreateComponent } from './components/job-type/job-type-create/job-type-create.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -28,7 +27,6 @@ import { ActionButtonComponent } from './components/button/action-button.compone
 const appRoutes: Routes = [
     { path: '', component: DashboardComponent },
     { path: 'job_types', component: JobTypesComponent },
-    { path: 'job_types/edit/:id', component: JobTypeEditComponent },
     { path: 'job_types/create', component: JobTypeCreateComponent },
 ];
 
@@ -45,7 +43,6 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
         NavbarComponent,
         JobTypesComponent,
         DashboardComponent,
-        JobTypeEditComponent,
         JobTypeEditDrawerComponent,
         ActionButtonComponent,
         JobTypeCreateComponent,

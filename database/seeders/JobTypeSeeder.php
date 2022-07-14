@@ -24,5 +24,7 @@ class JobTypeSeeder extends Seeder
             'slug' => 'contract',
             'name' => 'Contract',
         ]);
+
+        JobType::factory(100)->create();
     }
 }

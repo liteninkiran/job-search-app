@@ -16,8 +16,12 @@ class JobTypeFactory extends Factory
      */
     public function definition()
     {
+        $name = $this->faker->unique()->city;
+        $slug = strtolower(str_replace(' ', '_', $name));
+
         return [
-            //
+            'slug' => $slug,
+            'name' => $name,
         ];
     }
 }
