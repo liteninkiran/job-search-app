@@ -1,10 +1,18 @@
+import { 
+    ColDef,
+    GridApi,
+    SideBarDef,
+    ServerSideStoreType,
+    IServerSideDatasource,
+    IServerSideGetRowsParams,
+    IServerSideGetRowsRequest
+} from 'ag-grid-community';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActionButtonComponent, ButtonParams } from '../../button/action-button.component';
 import { NzDrawerRef, NzDrawerService } from 'ng-zorro-antd/drawer';
 import { JobTypeCreateComponent } from '../job-type-create/job-type-create.component';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { JobTypeEditComponent } from '../job-type-edit/job-type-edit.component';
-import { ColDef, GridApi, SideBarDef, IServerSideDatasource, ServerSideStoreType } from 'ag-grid-community';
 import { HttpErrorResponse } from '@angular/common/http';
 import { JobTypeService } from './job-type.service';
 import { AgGridAngular } from 'ag-grid-angular';
@@ -34,6 +42,8 @@ export class JobTypesComponent implements OnInit, OnDestroy {
     private gridApi!: GridApi<JobType>;
     private gridColumnApi!: any;
     private datasource!: IServerSideDatasource;
+
+    private applySort = true;
 
     constructor(
         private jobTypeService: JobTypeService,
@@ -72,6 +82,7 @@ export class JobTypesComponent implements OnInit, OnDestroy {
                 field: 'id',
                 flex: 2,
                 hide: false,
+                sortable: false,
                 cellRenderer: ActionButtonComponent,
                 cellRendererParams: {
                     editUrl: 'job_types/edit/',
@@ -112,7 +123,8 @@ export class JobTypesComponent implements OnInit, OnDestroy {
         };
     }
 
-    public ngOnInit(): void { }
+    public ngOnInit(): void {
+    }
 
     public ngOnDestroy(): void {
         this.subJobTypes.unsubscribe();
@@ -137,9 +149,6 @@ export class JobTypesComponent implements OnInit, OnDestroy {
 
     public open_edit_drawer(id: number): void {
         this.drawerRef = this.drawerService.create({
-            nzTitle: '',
-            nzFooter: '',
-            nzExtra: '',
             nzContent: JobTypeEditComponent,
             nzContentParams: { 'id': id },
             nzWidth: 500,
@@ -147,48 +156,57 @@ export class JobTypesComponent implements OnInit, OnDestroy {
 
         this.drawerRef.afterOpen.subscribe(() => { });
       
-        this.drawerRef.afterClose.subscribe(() => {
-            this.gridApi.setServerSideDatasource(this.datasource);
+        this.drawerRef.afterClose.subscribe((data: JobType) => {
+            if(data) {
+                this.gridApi.setServerSideDatasource(this.datasource); 
+            }
         });
     }
 
     public open_create_drawer(): void {
         this.drawerRef = this.drawerService.create({
-            nzTitle: '',
-            nzFooter: '',
-            nzExtra: '',
             nzContent: JobTypeCreateComponent,
             nzContentParams: { },
             nzWidth: 500,
         });
 
         this.drawerRef.afterOpen.subscribe(() => { });
-      
-        this.drawerRef.afterClose.subscribe(() => {
-            this.gridApi.setServerSideDatasource(this.datasource);
+
+        this.drawerRef.afterClose.subscribe((data: JobType) => {
+            if(data) {
+                this.gridApi.setServerSideDatasource(this.datasource); 
+            }
         });
     }
 
     public onGridReady(params: any): void {
         this.gridApi = params.api;
         this.gridColumnApi = params.columnApi;
-
         this.datasource = {
-            getRows: ((params: any) => {
+            getRows: ((params: IServerSideGetRowsParams) => {
+                const requestParams: IServerSideGetRowsRequest = params.request;
+                const requestParamsJSON: string = JSON.stringify(requestParams);
                 this.subJobTypes = this
                         .jobTypeService
-                        .getJobTypesGrid(JSON.stringify({ ...params.request }))
-                        .subscribe((response) => {
-                            params.success({
-                                rowData: response.rows,
-                                rowCount: response.lastRow,
-                            });
-                        });
+                        .getJobTypesGrid(requestParamsJSON)
+                        .subscribe((response) => params.success({
+                            rowData: response.rows,
+                            rowCount: response.lastRow,
+                        }));
+                this.sortByName();
             })
         };
 
-        // setting the datasource, the grid will call getRows to pass the request
         params.api.setServerSideDatasource(this.datasource);
     }
 
+    public sortByName() {
+        if(this.applySort) {
+            this.gridColumnApi.applyColumnState({
+                state: [{ colId: 'name', sort: 'asc' }],
+                defaultState: { sort: null },
+            });
+            this.applySort = false;
+        }
+    }
 }

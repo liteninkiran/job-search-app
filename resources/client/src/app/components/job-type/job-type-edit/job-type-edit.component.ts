@@ -64,7 +64,7 @@ export class JobTypeEditComponent implements OnInit, OnDestroy {
     public submitForm() {
         this.mapFormValuesToObject();
         this.subUpdate = this.jobTypeService.updateJobType(this.id, this.jobType).subscribe({
-            next: (data) => this.drawerRef.close(),
+            next: (data: JobType) => this.drawerRef.close(data),
             error: (error: HttpErrorResponse) => this.errors = error.error.errors,
         });
     }

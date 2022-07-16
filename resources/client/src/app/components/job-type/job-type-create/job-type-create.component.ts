@@ -42,7 +42,7 @@ export class JobTypeCreateComponent implements OnInit {
     public submitForm() {
         this.mapFormValuesToObject();
         this.subCreate = this.jobTypeService.createJobType(this.jobType).subscribe({
-            next: (data) => this.drawerRef.close(),
+            next: (data: JobType) => this.drawerRef.close(data),
             error: (error: HttpErrorResponse) => this.errors = error.error.errors,
         });
     }
