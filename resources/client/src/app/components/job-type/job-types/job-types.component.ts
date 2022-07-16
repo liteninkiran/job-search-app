@@ -1,14 +1,15 @@
-import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { AgGridAngular } from 'ag-grid-angular';
-import { JobTypeService } from './job-type.service';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActionButtonComponent, ButtonParams } from '../../button/action-button.component';
-import { Subscription } from 'rxjs';
-import { ColDef, SideBarDef } from 'ag-grid-community';
-import { HttpErrorResponse } from '@angular/common/http';
-import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { NzDrawerRef, NzDrawerService } from 'ng-zorro-antd/drawer';
-import { JobTypeEditComponent } from '../job-type-edit/job-type-edit.component';
 import { JobTypeCreateComponent } from '../job-type-create/job-type-create.component';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { JobTypeEditComponent } from '../job-type-edit/job-type-edit.component';
+import { ColDef, GridApi, SideBarDef, IServerSideDatasource } from 'ag-grid-community';
+import { HttpErrorResponse } from '@angular/common/http';
+import { JobTypeService } from './job-type.service';
+import { AgGridAngular } from 'ag-grid-angular';
+import { Subscription } from 'rxjs';
+import { JobType } from './job-type';
 
 @Component({
     selector: 'app-job-types',
@@ -17,44 +18,51 @@ import { JobTypeCreateComponent } from '../job-type-create/job-type-create.compo
 })
 export class JobTypesComponent implements OnInit, OnDestroy {
 
-    @ViewChild('grid', { static: false }) agGrid!: AgGridAngular;
-
     public jobTypes: any;
-    public defaultColDef: ColDef = {
-        flex: 5,
-        minWidth: 100,
-        filter: true,
-        sortable: true,
-        resizable: true,
-        hide: true,
-      };
-    public columnDefs = [
-        { headerName: 'ID', field: 'id', flex: 1 },
-        { headerName: 'Slug', field: 'slug' },
-        { headerName: 'Name', field: 'name', hide: false },
-        {
-            headerName: 'Actions',
-            field: 'id',
-            flex: 2,
-            hide: false,
-            cellRenderer: ActionButtonComponent,
-            cellRendererParams: {
-                editUrl: 'job_types/edit/',
-                parent: this,
-            } as ButtonParams
-        },
-    ];
-    public sideBar: SideBarDef;
     public subJobTypes: Subscription = new Subscription;
     public subDelete: Subscription = new Subscription;
     public calendarVisible = false;
     public drawerRef!: NzDrawerRef;
+    public loading = true;
+
+    // Ag Grid
+    public rowModelType: AgGridAngular['rowModelType'] = 'serverSide';
+    public columnDefs: AgGridAngular['columnDefs'];
+    public defaultColDef: ColDef;
+    public sideBar: SideBarDef;
+    private gridApi!: GridApi<JobType>;
+    private gridColumnApi!: any;
+    private datasource!: IServerSideDatasource;
 
     constructor(
         private jobTypeService: JobTypeService,
         private notification: NzNotificationService,
         private drawerService: NzDrawerService,
     ) {
+        this.defaultColDef = {
+            flex: 5,
+            minWidth: 100,
+            filter: true,
+            sortable: true,
+            resizable: true,
+            hide: true,
+        };
+        this.columnDefs = [
+            { headerName: 'ID', field: 'id', flex: 1 },
+            { headerName: 'Slug', field: 'slug' },
+            { headerName: 'Name', field: 'name', hide: false },
+            {
+                headerName: 'Actions',
+                field: 'id',
+                flex: 2,
+                hide: false,
+                cellRenderer: ActionButtonComponent,
+                cellRendererParams: {
+                    editUrl: 'job_types/edit/',
+                    parent: this,
+                } as ButtonParams
+            },
+        ];
         this.sideBar = {
             toolPanels: [
                 {
@@ -88,24 +96,16 @@ export class JobTypesComponent implements OnInit, OnDestroy {
         };
     }
 
-    public ngOnInit(): void {
-        this.getJobTypes();
-    }
+    public ngOnInit(): void { }
 
     public ngOnDestroy(): void {
         this.subJobTypes.unsubscribe();
         this.subDelete.unsubscribe();
     }
 
-    public getJobTypes() {
-        this.subJobTypes = this.jobTypeService.getJobTypes().subscribe(res => {
-            this.jobTypes = res;
-        });
-    }
-
     public deleteRecord(id: number) {
         this.subDelete = this.jobTypeService.deleteJobType(id).subscribe({
-            next: (data) => this.getJobTypes(),
+            next: (data) => this.gridApi.setServerSideDatasource(this.datasource),
             error: (error: HttpErrorResponse) => this.deleteError(error),
         });
     }
@@ -132,7 +132,7 @@ export class JobTypesComponent implements OnInit, OnDestroy {
         this.drawerRef.afterOpen.subscribe(() => { });
       
         this.drawerRef.afterClose.subscribe(() => {
-            this.getJobTypes();
+            this.gridApi.setServerSideDatasource(this.datasource);
         });
     }
 
@@ -149,7 +149,31 @@ export class JobTypesComponent implements OnInit, OnDestroy {
         this.drawerRef.afterOpen.subscribe(() => { });
       
         this.drawerRef.afterClose.subscribe(() => {
-            this.getJobTypes();
+            this.gridApi.setServerSideDatasource(this.datasource);
         });
     }
+
+    public onGridReady(params: any): void {
+        this.gridApi = params.api;
+        this.gridColumnApi = params.columnApi;
+
+        this.datasource = {
+            getRows: ((params: any) => {
+                this.subJobTypes = this
+                        .jobTypeService
+                        .getJobTypesGrid(JSON.stringify({ ...params.request }))
+                        .subscribe((response) => {
+                            params.success({
+                                rowData: response.rows,
+                                rowCount: response.lastRow,
+                            });
+                            this.loading = false;
+                        });
+            })
+        };
+
+        // setting the datasource, the grid will call getRows to pass the request
+        params.api.setServerSideDatasource(this.datasource);
+    }
+
 }

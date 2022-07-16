@@ -21,6 +21,17 @@ class JobTypeController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function indexGrid()
+    {
+        $jobTypes = JobType::all();
+        return ['rows' => $jobTypes, 'lastRow' => $jobTypes->count()];
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return Response

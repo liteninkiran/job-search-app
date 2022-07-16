@@ -3,14 +3,14 @@
 
 <hr>
 
-<nz-skeleton *ngIf="!jobTypes" [nzActive]="true" [nzParagraph]="{ rows: 10 }"></nz-skeleton>
+<nz-skeleton *ngIf="false" [nzActive]="true" [nzParagraph]="{ rows: 10 }"></nz-skeleton>
 
 <ag-grid-angular
-    *ngIf="jobTypes"
-    #grid
     class="ag-theme-alpine data-grid mb-5"
     [defaultColDef]="defaultColDef"
+    [rowModelType]="rowModelType"
     [columnDefs]="columnDefs"
     [rowData]="jobTypes"
     [sideBar]="sideBar"
+    (gridReady)="onGridReady($event)"
 ></ag-grid-angular>
