@@ -8,6 +8,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { NzDrawerRef, NzDrawerService } from 'ng-zorro-antd/drawer';
 import { JobTypeEditDrawerComponent } from '../job-type-edit-drawer/job-type-edit-drawer.component';
+import { JobTypeCreateDrawerComponent } from '../job-type-create-drawer/job-type-create-drawer.component';
 
 @Component({
     selector: 'app-job-types',
@@ -118,13 +119,30 @@ export class JobTypesComponent implements OnInit, OnDestroy {
         });
     }
 
-    public open(id: number): void {
+    public open_edit_drawer(id: number): void {
         this.drawerRef = this.drawerService.create({
             nzTitle: '',
             nzFooter: '',
             nzExtra: '',
             nzContent: JobTypeEditDrawerComponent,
             nzContentParams: { 'id': id },
+            nzWidth: 500,
+        });
+
+        this.drawerRef.afterOpen.subscribe(() => { });
+      
+        this.drawerRef.afterClose.subscribe(() => {
+            this.getJobTypes();
+        });
+    }
+
+    public open_create_drawer(): void {
+        this.drawerRef = this.drawerService.create({
+            nzTitle: '',
+            nzFooter: '',
+            nzExtra: '',
+            nzContent: JobTypeCreateDrawerComponent,
+            nzContentParams: { },
             nzWidth: 500,
         });
 

@@ -20,7 +20,7 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { JobTypesComponent } from './components/job-type/job-types/job-types.component';
 import { JobTypeEditDrawerComponent } from './components/job-type/job-type-edit-drawer/job-type-edit-drawer.component';
-import { JobTypeCreateComponent } from './components/job-type/job-type-create/job-type-create.component';
+import { JobTypeCreateDrawerComponent } from './components/job-type/job-type-create-drawer/job-type-create-drawer.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ActionButtonComponent } from './components/button/action-button.component';
 import { DateAgoPipe } from './pipes/date-ago.pipe';
@@ -28,7 +28,6 @@ import { DateAgoPipe } from './pipes/date-ago.pipe';
 const appRoutes: Routes = [
     { path: '', component: DashboardComponent },
     { path: 'job_types', component: JobTypesComponent },
-    { path: 'job_types/create', component: JobTypeCreateComponent },
 ];
 
 registerLocaleData(en);
@@ -40,14 +39,14 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
 
 @NgModule({
     declarations: [
+        DateAgoPipe,
         AppComponent,
         NavbarComponent,
         JobTypesComponent,
         DashboardComponent,
-        JobTypeEditDrawerComponent,
         ActionButtonComponent,
-        JobTypeCreateComponent,
-        DateAgoPipe,
+        JobTypeEditDrawerComponent,
+        JobTypeCreateDrawerComponent,
     ],
     imports: [
         FormsModule,

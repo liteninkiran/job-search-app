@@ -1,0 +1,32 @@
+<form nz-form [nzLayout]="'vertical'" [formGroup]="form" (ngSubmit)="submitForm()">
+
+    <!-- Slug -->
+    <nz-form-item>
+        <nz-form-control nzErrorTip="Please enter a slug">
+            <nz-input-group>
+                <input formControlName="slug" nz-input placeholder="Slug..." />
+                <span *ngIf="errors?.slug" class="text-danger">{{ errors.slug }}</span>
+            </nz-input-group>
+        </nz-form-control>
+    </nz-form-item>
+
+    <!-- Job Type -->
+    <nz-form-item>
+        <nz-form-control nzErrorTip="Please enter a job type">
+            <nz-input-group>
+                <input formControlName="name" nz-input placeholder="Job type..." />
+                <span *ngIf="errors?.name" class="text-danger">{{ errors.name }}</span>
+            </nz-input-group>
+        </nz-form-control>
+    </nz-form-item>
+
+    <!-- Submit -->
+    <nz-form-item>
+        <nz-form-control>
+            <button nz-button nzType="primary" [disabled]="!form.valid">Create</button>
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-divider></nz-divider>
+
+</form>

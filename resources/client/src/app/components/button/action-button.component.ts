@@ -52,7 +52,7 @@ export class ActionButtonComponent implements OnInit, ICellRendererAngularComp {
     }
 
     public edit(event: any): void {
-        this.parent.open(this.id);
+        this.parent.open_edit_drawer(this.id);
     }
 
     public confirm(): void {

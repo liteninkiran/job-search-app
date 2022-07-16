@@ -14,7 +14,7 @@ export class JobTypeService {
         return this.httpClient.get<JobType[]>('http://127.0.0.1:8000/api/job_type');
     }
 
-    public addJobType(jobType: JobType): Observable<JobType> {
+    public createJobType(jobType: JobType): Observable<JobType> {
         return this.httpClient.post<JobType>('http://127.0.0.1:8000/api/job_type', jobType);
     }
 

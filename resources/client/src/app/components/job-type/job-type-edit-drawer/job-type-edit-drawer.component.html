@@ -1,13 +1,13 @@
 <nz-skeleton *ngIf="!jobType" [nzActive]="true"></nz-skeleton>
 
 <ng-container *ngIf="jobType">
-    <form nz-form [nzLayout]="'vertical'" [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <form nz-form [nzLayout]="'vertical'" [formGroup]="form" (ngSubmit)="submitForm()">
 
         <!-- Job Type -->
         <nz-form-item>
             <nz-form-control nzErrorTip="Please enter a job type">
                 <nz-input-group>
-                    <input formControlName="name" nz-input placeholder="Job type..." [(ngModel)]="jobType.name" />
+                    <input formControlName="name" nz-input placeholder="Job type..." />
                     <span *ngIf="errors?.name" class="text-danger">{{ errors.name }}</span>
                 </nz-input-group>
             </nz-form-control>
@@ -16,7 +16,7 @@
         <!-- Submit -->
         <nz-form-item>
             <nz-form-control>
-                <button nz-button nzType="primary" [disabled]="!validateForm.valid">Update</button>
+                <button nz-button nzType="primary" [disabled]="!form.valid">Update</button>
             </nz-form-control>
         </nz-form-item>
 
@@ -25,16 +25,16 @@
         <!-- Meta Data -->
         <div class="container">
 
-            <div class="row">
+            <div class="d-flex">
 
                 <!-- Column 1: Label Tags -->
-                <div class="col-sm px-0">
+                <div class="w-25">
                     <nz-tag class="d-block my-2">Created:</nz-tag>
                     <nz-tag class="d-block my-2">Updated:</nz-tag>
                 </div>
 
                 <!-- Column 2: Value Tags -->
-                <div class="col-sm px-0">
+                <div class="w-40">
 
                     <!-- Created at (value with tooltip) -->
                     <nz-tag
@@ -56,12 +56,6 @@
                     </nz-tag>
 
                 </div>
-
-                <!-- Column 3 -->
-                <div class="col-sm"></div>
-
-                <!-- Column 4 -->
-                <div class="col-sm"></div>
 
             </div>
 
