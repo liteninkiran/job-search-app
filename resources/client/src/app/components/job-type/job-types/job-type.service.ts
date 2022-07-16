@@ -20,10 +20,6 @@ export class JobTypeService {
         return this.httpClient.get<JobType[]>(this.apiUrl);
     }
 
-    public getJobTypesGrid(header: string): Observable<any> {
-        return this.httpClient.post(`${this.apiUrl}_grid`, header);
-    }
-
     public createJobType(jobType: JobType): Observable<JobType> {
         return this.httpClient.post<JobType>(this.apiUrl, jobType);
     }
@@ -38,5 +34,13 @@ export class JobTypeService {
 
     public updateJobType(id: number, jobType: JobType): Observable<JobType> {
         return this.httpClient.put<JobType>(`${this.apiUrl}/${id}`, jobType);
+    }
+
+    public getJobTypesGrid(header: string): Observable<any> {
+        return this.httpClient.post(`${this.apiUrl}_grid`, header, this.httpOptions);
+    }
+
+    public getJobTypeFilter(field: string): Observable<any> {
+        return this.httpClient.get(`${this.apiUrl}_grid/${field}`, this.httpOptions);
     }
 }

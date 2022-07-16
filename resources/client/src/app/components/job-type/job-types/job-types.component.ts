@@ -4,7 +4,7 @@ import { NzDrawerRef, NzDrawerService } from 'ng-zorro-antd/drawer';
 import { JobTypeCreateComponent } from '../job-type-create/job-type-create.component';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { JobTypeEditComponent } from '../job-type-edit/job-type-edit.component';
-import { ColDef, GridApi, SideBarDef, IServerSideDatasource } from 'ag-grid-community';
+import { ColDef, GridApi, SideBarDef, IServerSideDatasource, ServerSideStoreType } from 'ag-grid-community';
 import { HttpErrorResponse } from '@angular/common/http';
 import { JobTypeService } from './job-type.service';
 import { AgGridAngular } from 'ag-grid-angular';
@@ -18,18 +18,19 @@ import { JobType } from './job-type';
 })
 export class JobTypesComponent implements OnInit, OnDestroy {
 
-    public jobTypes: any;
     public subJobTypes: Subscription = new Subscription;
     public subDelete: Subscription = new Subscription;
     public calendarVisible = false;
     public drawerRef!: NzDrawerRef;
-    public loading = true;
 
     // Ag Grid
+    public serverSideStoreType: ServerSideStoreType = 'partial';
     public rowModelType: AgGridAngular['rowModelType'] = 'serverSide';
     public columnDefs: AgGridAngular['columnDefs'];
+    public paginationPageSize = 10;
     public defaultColDef: ColDef;
     public sideBar: SideBarDef;
+    public rowData = [];
     private gridApi!: GridApi<JobType>;
     private gridColumnApi!: any;
     private datasource!: IServerSideDatasource;
@@ -42,15 +43,30 @@ export class JobTypesComponent implements OnInit, OnDestroy {
         this.defaultColDef = {
             flex: 5,
             minWidth: 100,
-            filter: true,
+            filter: false,
             sortable: true,
             resizable: true,
             hide: true,
         };
         this.columnDefs = [
-            { headerName: 'ID', field: 'id', flex: 1 },
-            { headerName: 'Slug', field: 'slug' },
-            { headerName: 'Name', field: 'name', hide: false },
+            {
+                headerName: 'ID',
+                field: 'id',
+                flex: 1,
+            },
+            {
+                headerName: 'Name',
+                field: 'name',
+                hide: false,
+                filter: 'agSetColumnFilter',
+                filterParams: {
+                    values: (params: any) => {
+                        this.jobTypeService
+                            .getJobTypeFilter(params.colDef.field)
+                            .subscribe(values => params.success(values));
+                    }
+                }
+            },
             {
                 headerName: 'Actions',
                 field: 'id',
@@ -167,7 +183,6 @@ export class JobTypesComponent implements OnInit, OnDestroy {
                                 rowData: response.rows,
                                 rowCount: response.lastRow,
                             });
-                            this.loading = false;
                         });
             })
         };

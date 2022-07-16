@@ -21,5 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::resource('/job_type', JobTypeController::class);
+Route::get('/job_type_grid/{field}', [JobTypeController::class, 'indexGridFilter']);
 Route::post('/job_type_grid', [JobTypeController::class, 'indexGrid']);
+
 Route::resource('/job_history', JobHistoryController::class);

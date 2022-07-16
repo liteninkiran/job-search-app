@@ -3,14 +3,15 @@
 
 <hr>
 
-<nz-skeleton *ngIf="false" [nzActive]="true" [nzParagraph]="{ rows: 10 }"></nz-skeleton>
-
 <ag-grid-angular
     class="ag-theme-alpine data-grid mb-5"
+    [serverSideStoreType]="serverSideStoreType"
+    [paginationPageSize]="paginationPageSize"
     [defaultColDef]="defaultColDef"
     [rowModelType]="rowModelType"
     [columnDefs]="columnDefs"
-    [rowData]="jobTypes"
+    [pagination]="true"
+    [rowData]="rowData"
     [sideBar]="sideBar"
     (gridReady)="onGridReady($event)"
 ></ag-grid-angular>
