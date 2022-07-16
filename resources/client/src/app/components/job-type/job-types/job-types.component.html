@@ -4,7 +4,10 @@
 
 <hr>
 
+<nz-skeleton *ngIf="!jobTypes" [nzActive]="true" [nzParagraph]="{ rows: 10 }"></nz-skeleton>
+
 <ag-grid-angular
+    *ngIf="jobTypes"
     #grid
     class="ag-theme-alpine data-grid mb-5"
     [defaultColDef]="defaultColDef"
