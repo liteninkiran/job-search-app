@@ -12,7 +12,7 @@ export interface ButtonParams {
     template: `
         <!-- Edit -->
         <button
-            class="mx-2"
+            class="mx-1"
             nz-button
             nzType="primary"
             (click)="edit($event)"
@@ -22,7 +22,7 @@ export interface ButtonParams {
 
         <!-- Delete -->
         <button 
-            class="mx-2"
+            class="mx-1"
             nz-button
             nzType="primary"
             nzDanger
