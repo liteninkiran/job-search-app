@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\JobHistory;
+use App\Models\JobType;
 use App\Models\User;
 
 class JobHistorySeeder extends Seeder
@@ -22,5 +23,7 @@ class JobHistorySeeder extends Seeder
                 'user_id' => $user->id
             ]);
         }
+
+        JobType::factory(98)->create();
     }
 }
