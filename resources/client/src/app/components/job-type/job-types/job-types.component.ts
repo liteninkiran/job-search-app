@@ -124,7 +124,8 @@ export class JobTypesComponent implements OnInit, OnDestroy {
             nzFooter: '',
             nzExtra: '',
             nzContent: JobTypeEditDrawerComponent,
-            nzContentParams: { 'id': id }
+            nzContentParams: { 'id': id },
+            nzWidth: 500,
         });
 
         this.drawerRef.afterOpen.subscribe(() => { });

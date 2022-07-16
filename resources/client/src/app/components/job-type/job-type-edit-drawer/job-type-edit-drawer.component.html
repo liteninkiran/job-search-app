@@ -1,17 +1,71 @@
-<form (ngSubmit)="updateJobType()">
+<nz-skeleton *ngIf="!jobType" [nzActive]="true"></nz-skeleton>
 
-    <!-- Name -->
-    <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" name="name" class="form-control" [(ngModel)]="jobType.name">
-        <span *ngIf="errors?.name" class="text-danger">{{ errors.name }}</span>
-    </div>
+<ng-container *ngIf="jobType">
+    <form nz-form [nzLayout]="'vertical'" [formGroup]="validateForm" (ngSubmit)="submitForm()">
 
-    <p class="my-2">Created: {{ jobType.created_at | dateAgo }}</p>
-    <p class="my-2">Updated: {{ jobType.updated_at | dateAgo }}</p>
+        <!-- Job Type -->
+        <nz-form-item>
+            <nz-form-control nzErrorTip="Please enter a job type">
+                <nz-input-group>
+                    <input formControlName="name" nz-input placeholder="Job type..." [(ngModel)]="jobType.name" />
+                    <span *ngIf="errors?.name" class="text-danger">{{ errors.name }}</span>
+                </nz-input-group>
+            </nz-form-control>
+        </nz-form-item>
 
-    <button class="btn btn-dark btn-sm mt-4">
-        Update
-    </button>
+        <!-- Submit -->
+        <nz-form-item>
+            <nz-form-control>
+                <button nz-button nzType="primary" [disabled]="!validateForm.valid">Update</button>
+            </nz-form-control>
+        </nz-form-item>
 
-</form>
+        <nz-divider></nz-divider>
+
+        <!-- Meta Data -->
+        <div class="container">
+
+            <div class="row">
+
+                <!-- Column 1: Label Tags -->
+                <div class="col-sm px-0">
+                    <nz-tag class="d-block my-2">Created:</nz-tag>
+                    <nz-tag class="d-block my-2">Updated:</nz-tag>
+                </div>
+
+                <!-- Column 2: Value Tags -->
+                <div class="col-sm px-0">
+
+                    <!-- Created at (value with tooltip) -->
+                    <nz-tag
+                        class="d-block my-2"
+                        nz-tooltip
+                        nzTooltipTitle="{{ jobType.created_at | date: 'dd/MM/yyyy h:mm:ss' }}"
+                        nzTooltipPlacement="right"
+                    >
+                        {{ jobType.created_at | dateAgo }}
+                    </nz-tag>
+
+                    <!-- Updated at (value with tooltip) -->
+                    <nz-tag
+                        class="d-block my-2"
+                        nz-tooltip nzTooltipTitle="{{ jobType.updated_at | date: 'dd/MM/yyyy h:mm:ss' }}"
+                        nzTooltipPlacement="right"
+                    >
+                        {{ jobType.updated_at | dateAgo }}
+                    </nz-tag>
+
+                </div>
+
+                <!-- Column 3 -->
+                <div class="col-sm"></div>
+
+                <!-- Column 4 -->
+                <div class="col-sm"></div>
+
+            </div>
+
+        </div>
+
+    </form>
+</ng-container>

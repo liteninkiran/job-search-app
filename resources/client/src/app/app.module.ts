@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AgGridModule } from 'ag-grid-angular';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
@@ -55,6 +55,7 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
         BrowserModule,
         HttpClientModule,
         NgZorroAntdModule,
+        ReactiveFormsModule,
         BrowserAnimationsModule,
         RouterModule.forRoot(appRoutes),
     ],
