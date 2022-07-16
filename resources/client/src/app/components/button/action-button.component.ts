@@ -12,7 +12,9 @@ export interface ButtonParams {
     template: `
         <!-- Edit -->
         <button
-            class="btn btn-dark btn-sm"
+            class="mx-2"
+            nz-button
+            nzType="primary"
             (click)="edit($event)"
         >
             Edit
@@ -20,7 +22,10 @@ export interface ButtonParams {
 
         <!-- Delete -->
         <button 
-            class="btn btn-danger btn-sm mx-2"
+            class="mx-2"
+            nz-button
+            nzType="primary"
+            nzDanger
             nz-popconfirm
             nzPopconfirmTitle="Confirm delete"
             nzPopconfirmPlacement="top"
