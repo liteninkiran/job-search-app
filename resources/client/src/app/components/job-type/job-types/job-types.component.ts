@@ -121,8 +121,8 @@ export class JobTypesComponent implements OnInit, OnDestroy {
     public open(id: number): void {
         this.drawerRef = this.drawerService.create({
             nzTitle: '',
-            nzFooter: 'Footer',
-            nzExtra: 'Edit',
+            nzFooter: '',
+            nzExtra: '',
             nzContent: JobTypeEditDrawerComponent,
             nzContentParams: { 'id': id }
         });

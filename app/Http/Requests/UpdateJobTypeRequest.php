@@ -25,7 +25,6 @@ class UpdateJobTypeRequest extends FormRequest
     public function rules()
     {
         return [
-            'slug' => ['required', 'string', 'max:50', Rule::unique('job_types')->ignore($this->job_type->id)],
             'name' => ['required', 'string', 'max:50', Rule::unique('job_types')->ignore($this->job_type->id)],
         ];
     }

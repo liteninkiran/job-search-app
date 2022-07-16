@@ -81,7 +81,6 @@ class JobTypeController extends Controller
         }
 
         $jobType->update([
-            'slug' => $request->slug,
             'name' => $request->name,
         ]);
         return response()->json($jobType, 200);

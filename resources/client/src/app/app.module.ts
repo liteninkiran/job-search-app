@@ -23,6 +23,7 @@ import { JobTypeEditDrawerComponent } from './components/job-type/job-type-edit-
 import { JobTypeCreateComponent } from './components/job-type/job-type-create/job-type-create.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ActionButtonComponent } from './components/button/action-button.component';
+import { DateAgoPipe } from './pipes/date-ago.pipe';
 
 const appRoutes: Routes = [
     { path: '', component: DashboardComponent },
@@ -46,6 +47,7 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
         JobTypeEditDrawerComponent,
         ActionButtonComponent,
         JobTypeCreateComponent,
+        DateAgoPipe,
     ],
     imports: [
         FormsModule,
