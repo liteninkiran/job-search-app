@@ -7,8 +7,8 @@ import { ColDef, SideBarDef } from 'ag-grid-community';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { NzDrawerRef, NzDrawerService } from 'ng-zorro-antd/drawer';
-import { JobTypeEditDrawerComponent } from '../job-type-edit-drawer/job-type-edit-drawer.component';
-import { JobTypeCreateDrawerComponent } from '../job-type-create-drawer/job-type-create-drawer.component';
+import { JobTypeEditComponent } from '../job-type-edit/job-type-edit.component';
+import { JobTypeCreateComponent } from '../job-type-create/job-type-create.component';
 
 @Component({
     selector: 'app-job-types',
@@ -124,7 +124,7 @@ export class JobTypesComponent implements OnInit, OnDestroy {
             nzTitle: '',
             nzFooter: '',
             nzExtra: '',
-            nzContent: JobTypeEditDrawerComponent,
+            nzContent: JobTypeEditComponent,
             nzContentParams: { 'id': id },
             nzWidth: 500,
         });
@@ -141,7 +141,7 @@ export class JobTypesComponent implements OnInit, OnDestroy {
             nzTitle: '',
             nzFooter: '',
             nzExtra: '',
-            nzContent: JobTypeCreateDrawerComponent,
+            nzContent: JobTypeCreateComponent,
             nzContentParams: { },
             nzWidth: 500,
         });

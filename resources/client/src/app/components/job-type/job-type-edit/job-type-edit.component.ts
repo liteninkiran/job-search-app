@@ -7,11 +7,11 @@ import { JobType } from '../job-types/job-type';
 import { JobTypeService } from '../job-types/job-type.service';
 
 @Component({
-    selector: 'app-job-type-edit-drawer',
-    templateUrl: './job-type-edit-drawer.component.html',
-    styleUrls: ['./job-type-edit-drawer.component.css'],
+    selector: 'app-job-type-edit',
+    templateUrl: './job-type-edit.component.html',
+    styleUrls: ['./job-type-edit.component.css'],
 })
-export class JobTypeEditDrawerComponent implements OnInit, OnDestroy {
+export class JobTypeEditComponent implements OnInit, OnDestroy {
 
     public id: number = 0;
     public jobType!: JobType;

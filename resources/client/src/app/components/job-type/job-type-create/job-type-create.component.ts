@@ -7,11 +7,11 @@ import { JobType } from '../job-types/job-type';
 import { JobTypeService } from '../job-types/job-type.service';
 
 @Component({
-    selector: 'app-job-type-create-drawer',
-    templateUrl: './job-type-create-drawer.component.html',
-    styleUrls: ['./job-type-create-drawer.component.css']
+    selector: 'app-job-type-create',
+    templateUrl: './job-type-create.component.html',
+    styleUrls: ['./job-type-create.component.css']
 })
-export class JobTypeCreateDrawerComponent implements OnInit {
+export class JobTypeCreateComponent implements OnInit {
 
     public jobType = new JobType();
     public errors: any;

@@ -19,8 +19,8 @@ import { registerLocaleData } from '@angular/common';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { JobTypesComponent } from './components/job-type/job-types/job-types.component';
-import { JobTypeEditDrawerComponent } from './components/job-type/job-type-edit-drawer/job-type-edit-drawer.component';
-import { JobTypeCreateDrawerComponent } from './components/job-type/job-type-create-drawer/job-type-create-drawer.component';
+import { JobTypeEditComponent } from './components/job-type/job-type-edit/job-type-edit.component';
+import { JobTypeCreateComponent } from './components/job-type/job-type-create/job-type-create.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ActionButtonComponent } from './components/button/action-button.component';
 import { DateAgoPipe } from './pipes/date-ago.pipe';
@@ -45,8 +45,8 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
         JobTypesComponent,
         DashboardComponent,
         ActionButtonComponent,
-        JobTypeEditDrawerComponent,
-        JobTypeCreateDrawerComponent,
+        JobTypeEditComponent,
+        JobTypeCreateComponent,
     ],
     imports: [
         FormsModule,
