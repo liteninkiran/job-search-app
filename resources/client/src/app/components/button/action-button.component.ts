@@ -11,28 +11,25 @@ export interface ButtonParams {
     selector: 'app-edit-button',
     template: `
         <!-- Edit -->
-        <button
-            class="mx-1"
-            nz-button
-            nzType="primary"
-            (click)="edit($event)"
-        >
-            Edit
-        </button>
+        <i nz-icon nzType="edit"
+            nzTheme="outline"
+            (click)="edit()"
+            class="mx-2 py-2"
+        ></i>
 
         <!-- Delete -->
-        <button 
-            class="mx-1"
-            nz-button
-            nzType="primary"
-            nzDanger
+        <i nz-icon nzType="delete"
+            nzTheme="outline"
             nz-popconfirm
             nzPopconfirmTitle="Confirm delete"
             nzPopconfirmPlacement="top"
+            [nzIcon]="iconTpl"
             (nzOnConfirm)="confirm()"
-        >
-            Delete
-        </button>
+            class="mx-2 py-2"
+        ></i>
+        <ng-template #iconTpl>
+            <i nz-icon nzType="exclamation-circle-o" style="color: red;"></i>
+        </ng-template>
     `,
     styles: [],
 })
@@ -56,7 +53,7 @@ export class ActionButtonComponent implements OnInit, ICellRendererAngularComp {
     public ngOnInit(): void {
     }
 
-    public edit(event: any): void {
+    public edit(): void {
         this.parent.open_edit_drawer(this.id);
     }
 
