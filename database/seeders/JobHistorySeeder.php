@@ -24,6 +24,6 @@ class JobHistorySeeder extends Seeder
             ]);
         }
 
-        JobType::factory(250)->create();
+        // JobType::factory(250)->create();
     }
 }
