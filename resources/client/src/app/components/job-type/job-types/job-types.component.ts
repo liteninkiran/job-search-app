@@ -37,6 +37,7 @@ export class JobTypesComponent implements OnInit, OnDestroy {
     public rowModelType: AgGridAngular['rowModelType'] = 'serverSide';
     public columnDefs: AgGridAngular['columnDefs'];
     public paginationPageSize = 10;
+    public cacheBlockSize = 10;
     public defaultColDef: ColDef;
     public sideBar: SideBarDef;
     public rowData = [];
