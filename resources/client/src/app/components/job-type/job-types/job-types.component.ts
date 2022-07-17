@@ -5,7 +5,8 @@ import {
     ServerSideStoreType,
     IServerSideDatasource,
     IServerSideGetRowsParams,
-    IServerSideGetRowsRequest
+    IServerSideGetRowsRequest,
+    RowDoubleClickedEvent
 } from 'ag-grid-community';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActionButtonComponent, ButtonParams } from '../../button/action-button.component';
@@ -80,7 +81,7 @@ export class JobTypesComponent implements OnInit, OnDestroy {
             {
                 headerName: 'Actions',
                 field: 'id',
-                flex: 2,
+                flex: 1,
                 hide: false,
                 sortable: false,
                 cellRenderer: ActionButtonComponent,
@@ -208,5 +209,9 @@ export class JobTypesComponent implements OnInit, OnDestroy {
             });
             this.applySort = false;
         }
+    }
+
+    public onRowDoubleClick(event: RowDoubleClickedEvent) {
+        this.open_edit_drawer(event.data.id);
     }
 }
