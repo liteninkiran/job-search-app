@@ -31,7 +31,7 @@ export interface ButtonParams {
             <i nz-icon nzType="exclamation-circle-o" style="color: red;"></i>
         </ng-template>
     `,
-    styles: [],
+    styles: [`i { cursor: pointer; }`],
 })
 export class ActionButtonComponent implements OnInit, ICellRendererAngularComp {
     public id: number = 0;
