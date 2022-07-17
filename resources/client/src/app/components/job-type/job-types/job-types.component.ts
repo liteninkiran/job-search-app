@@ -62,11 +62,6 @@ export class JobTypesComponent implements OnInit, OnDestroy {
         };
         this.columnDefs = [
             {
-                headerName: 'ID',
-                field: 'id',
-                flex: 1,
-            },
-            {
                 headerName: 'Name',
                 field: 'name',
                 hide: false,
